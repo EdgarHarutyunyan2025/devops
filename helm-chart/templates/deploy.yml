@@ -26,17 +26,25 @@ spec:
             limits:
               memory : {{ .Values.resources.memory }}
               cpu    : {{ .Values.resources.cpu }}
+
           ports:
             - containerPort: {{ .Values.container.container_port }}
+
           readinessProbe:
             httpGet:
               path: /
               port: {{ .Values.container.container_port }}
             initialDelaySeconds: 5
             periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+            successThreshold: 1
+
           livenessProbe:
             httpGet:
               path: /
               port: {{ .Values.container.container_port }}
             initialDelaySeconds: 10
             periodSeconds: 20
+            timeoutSeconds: 2
+            failureThreshold: 3
