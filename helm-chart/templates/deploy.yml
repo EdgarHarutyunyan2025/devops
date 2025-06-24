@@ -5,6 +5,12 @@ metadata:
   labels:
     app: {{ .Release.Name }}-deploy
 spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0        # сколько pod-ов можно убрать сразу (0 = нельзя удалить до появления новых)
+      maxSurge: 1
   selector:
     matchLabels:
       app: {{ .Release.Name }}
@@ -22,4 +28,15 @@ spec:
               cpu    : {{ .Values.resources.cpu }}
           ports:
             - containerPort: {{ .Values.container.container_port }}
-
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.container.container_port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.container.container_port }}
+            initialDelaySeconds: 10
+            periodSeconds: 20
