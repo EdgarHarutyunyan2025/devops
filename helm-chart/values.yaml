@@ -1,7 +1,7 @@
 # Default Values for my Helm Chart
 
 container:
-  image: edo1997edo/jsonplaceholder:v7
+  image: edo1997edo/jsonplaceholder:v4
   container_port: 3000
 resources:
   memory: "128Mi"
