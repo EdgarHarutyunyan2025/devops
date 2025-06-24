@@ -1,0 +1,11 @@
+# Default Values for my Helm Chart
+
+container:
+  image: edo1997edo/jsonplaceholder:v3
+  container_port: 3000
+resources:
+  memory: "128Mi"
+  cpu: "250m"
+
+service:
+  tg_port: 8888
